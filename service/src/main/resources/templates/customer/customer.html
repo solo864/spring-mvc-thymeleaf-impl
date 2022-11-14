@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<form th:action="@{/customers/{customerId}/update(customerId=${customer.id})}" method="post" th:object="${customer}">
+    <label for="firstname">Firstname:
+        <input id="firstname" type="text" name="firstname" th:value="*{firstName}">
+    </label><br>
+    <label for="birthDate">BirthDate:
+        <input id="birthDate" type="date" name="birthDate" th:value="*{birthDate}">
+    </label><br>
+    <label for="surname">Lastname:
+        <input id="surname" type="text" name="surname" th:value="*{surname}">
+    </label><br>
+    <div th:each="role : ${roles}">
+        <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == customer.role}">
+        <label th:for="${role}" th:text="${role}">Role name</label>
+    </div>
+    <button type="submit">Update</button>
+</form>
+<form th:action="@{/customers/{customerId}/delete(customerId=${customer.id})}" th:if="${customer.role.name() == 'ADMIN'}" method="post">
+    <button type="submit">Remove</button>
+</form>
+</body>
+</html>
